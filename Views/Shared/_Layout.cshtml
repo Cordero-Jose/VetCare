@@ -3,28 +3,188 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] — VetCare</title>
+    <title>@ViewData["Title"] - VetCare</title>
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <style>
-        body { background-color: #f8f9fa; }
-        .navbar-brand { font-weight: 700; font-size: 1.4rem; }
-        footer { font-size: 0.85rem; }
+        :root {
+            --brand-primary: #5C7057;
+            --brand-primary-hover: #4b5c47;
+            --brand-secondary: #89A482;
+            --brand-secondary-hover: #758e6f;
+            --brand-accent: #ACC5A6;
+            --brand-accent-light: #D1EDD3;
+            --brand-dark: #232d22;
+            --brand-bg: #f5f8f5;
+            --brand-surface: #ffffff;
+            --brand-border: #d7e2d5;
+        }
+
+        body {
+            background-color: var(--brand-bg);
+            color: #2b332a;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar-custom {
+            background-color: var(--brand-primary);
+            border-bottom: 2px solid var(--brand-secondary);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        .navbar-custom .navbar-brand {
+            font-weight: 700;
+            font-size: 1.3rem;
+            letter-spacing: 0.5px;
+            color: #ffffff !important;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-custom .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .navbar-custom .nav-link:hover {
+            color: #ffffff !important;
+            background-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .btn-brand-primary {
+            background-color: var(--brand-primary);
+            border-color: var(--brand-primary);
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .btn-brand-primary:hover,
+        .btn-brand-primary:focus {
+            background-color: var(--brand-primary-hover);
+            border-color: var(--brand-primary-hover);
+            color: #ffffff;
+        }
+
+        .btn-brand-secondary {
+            background-color: var(--brand-secondary);
+            border-color: var(--brand-secondary);
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .btn-brand-secondary:hover,
+        .btn-brand-secondary:focus {
+            background-color: var(--brand-secondary-hover);
+            border-color: var(--brand-secondary-hover);
+            color: #ffffff;
+        }
+
+        .btn-brand-outline {
+            border-color: var(--brand-primary);
+            color: var(--brand-primary);
+            background-color: transparent;
+            font-weight: 500;
+        }
+
+        .btn-brand-outline:hover {
+            background-color: var(--brand-primary);
+            color: #ffffff;
+        }
+
+        .table-custom-header {
+            background-color: var(--brand-primary);
+            color: #ffffff;
+        }
+
+        .table-custom-header th {
+            background-color: var(--brand-primary);
+            color: #ffffff;
+            border: none;
+            font-weight: 600;
+            padding: 0.85rem;
+        }
+
+        .card {
+            border: 1px solid var(--brand-border);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            background-color: var(--brand-surface);
+        }
+
+        .card-header-brand {
+            background-color: var(--brand-accent-light);
+            border-bottom: 1px solid var(--brand-accent);
+            color: var(--brand-dark);
+            font-weight: 600;
+        }
+
+        .page-title {
+            color: var(--brand-dark);
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--brand-secondary);
+            box-shadow: 0 0 0 0.25rem rgba(137, 164, 130, 0.25);
+        }
+
+        .alert-brand-accent {
+            background-color: var(--brand-accent-light);
+            border: 1px solid var(--brand-accent);
+            color: var(--brand-dark);
+        }
+
+        .accordion-button:not(.collapsed) {
+            color: var(--brand-dark);
+            background-color: var(--brand-accent-light);
+            box-shadow: inset 0 -1px 0 var(--brand-accent);
+        }
+
+        .accordion-button:focus {
+            border-color: var(--brand-secondary);
+            box-shadow: 0 0 0 0.25rem rgba(137, 164, 130, 0.25);
+        }
+
+        footer {
+            font-size: 0.85rem;
+            background-color: #ffffff;
+            border-top: 1px solid var(--brand-border);
+            color: #5c685b;
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <nav class="navbar navbar-expand-lg navbar-custom mb-4">
         <div class="container">
             <a class="navbar-brand" asp-controller="Mascotas" asp-action="Index">
-                🐾 VetCare
+                <i class="bi bi-hospital"></i> VetCare
             </a>
-            <div class="navbar-nav">
-                <a class="nav-link text-white" asp-controller="Mascotas" asp-action="Index">
-                    Mascotas
-                </a>
-                <a class="nav-link text-white" asp-controller="Consultas" asp-action="Create">
-                    Nueva Consulta
-                </a>
+            <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link" asp-controller="Mascotas" asp-action="Index">
+                        <i class="bi bi-list-check me-1"></i> Mascotas
+                    </a>
+                    <a class="nav-link" asp-controller="Consultas" asp-action="Create">
+                        <i class="bi bi-file-earmark-plus me-1"></i> Nueva Consulta
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
@@ -33,8 +193,10 @@
         @RenderBody()
     </main>
 
-    <footer class="text-center text-muted py-4 mt-5 border-top">
-        VetCare · SC-601 Programación Avanzada · @DateTime.Now.Year
+    <footer class="text-center py-4 mt-5">
+        <div class="container">
+            VetCare - Sistema de Gestion Clinica Veterinaria &middot; @DateTime.Now.Year
+        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

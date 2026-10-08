@@ -3,56 +3,64 @@
     ViewData["Title"] = "Editar Mascota";
 }
 
-<h2>✏️ Editar Mascota</h2>
-<hr />
+<div class="mb-4">
+    <h2 class="page-title mb-1">Editar Mascota</h2>
+    <p class="text-muted mb-0">Actualice la informacion del paciente</p>
+</div>
 
 <div class="row">
-    <div class="col-md-6">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
-            <input type="hidden" asp-for="IdMascota" />
+    <div class="col-md-7 col-lg-6">
+        <div class="card p-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                <input type="hidden" asp-for="IdMascota" />
 
-            <div class="mb-3">
-                <label asp-for="Nombre" class="form-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
+                <div class="mb-3">
+                    <label asp-for="Nombre" class="form-label fw-medium"></label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger small"></span>
+                </div>
 
-            <div class="mb-3">
-                <label asp-for="Especie" class="form-label"></label>
-                <input asp-for="Especie" class="form-control" />
-                <span asp-validation-for="Especie" class="text-danger"></span>
-            </div>
+                <div class="mb-3">
+                    <label asp-for="Especie" class="form-label fw-medium"></label>
+                    <input asp-for="Especie" class="form-control" />
+                    <span asp-validation-for="Especie" class="text-danger small"></span>
+                </div>
 
-            <div class="mb-3">
-                <label asp-for="Raza" class="form-label"></label>
-                <input asp-for="Raza" class="form-control" />
-                <span asp-validation-for="Raza" class="text-danger"></span>
-            </div>
+                <div class="mb-3">
+                    <label asp-for="Raza" class="form-label fw-medium"></label>
+                    <input asp-for="Raza" class="form-control" />
+                    <span asp-validation-for="Raza" class="text-danger small"></span>
+                </div>
 
-            <div class="mb-3">
-                <label asp-for="FechaNacimiento" class="form-label"></label>
-                <input asp-for="FechaNacimiento" class="form-control" type="date" />
-                <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
-            </div>
+                <div class="mb-3">
+                    <label asp-for="FechaNacimiento" class="form-label fw-medium"></label>
+                    <input asp-for="FechaNacimiento" class="form-control" type="date" />
+                    <span asp-validation-for="FechaNacimiento" class="text-danger small"></span>
+                </div>
 
-            <div class="mb-3">
-                <label asp-for="NombrePropietario" class="form-label"></label>
-                <input asp-for="NombrePropietario" class="form-control" />
-                <span asp-validation-for="NombrePropietario" class="text-danger"></span>
-            </div>
+                <div class="mb-3">
+                    <label asp-for="NombrePropietario" class="form-label fw-medium"></label>
+                    <input asp-for="NombrePropietario" class="form-control" />
+                    <span asp-validation-for="NombrePropietario" class="text-danger small"></span>
+                </div>
 
-            <div class="mb-3">
-                <label asp-for="TelefonoPropietario" class="form-label"></label>
-                <input asp-for="TelefonoPropietario" class="form-control" />
-                <span asp-validation-for="TelefonoPropietario" class="text-danger"></span>
-            </div>
+                <div class="mb-4">
+                    <label asp-for="TelefonoPropietario" class="form-label fw-medium"></label>
+                    <input asp-for="TelefonoPropietario" class="form-control" />
+                    <span asp-validation-for="TelefonoPropietario" class="text-danger small"></span>
+                </div>
 
-            <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-warning">💾 Actualizar</button>
-                <a asp-action="Index" class="btn btn-secondary">↩ Cancelar</a>
-            </div>
-        </form>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-brand-primary px-4">
+                        <i class="bi bi-save me-1"></i> Actualizar
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

@@ -4,78 +4,87 @@
     var mascota = ViewBag.Mascota as VetCare.Models.Mascota;
 }
 
-<h2>📋 Registrar Consulta Médica</h2>
-@if (mascota != null)
-{
-    <p class="text-muted">Mascota: <strong>@mascota.Nombre</strong> (@mascota.Especie)</p>
-}
-<hr />
+<div class="mb-4">
+    <h2 class="page-title mb-1">Registrar Consulta Medica</h2>
+    @if (mascota != null)
+    {
+        <p class="text-muted mb-0">Paciente: <strong>@mascota.Nombre</strong> <span class="badge" style="background-color: var(--brand-accent-light); color: var(--brand-dark);">@mascota.Especie</span></p>
+    }
+    else
+    {
+        <p class="text-muted mb-0">Ingrese los detalles clinicos de la atencion</p>
+    }
+</div>
 
 <div class="row">
-    <div class="col-md-7">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+    <div class="col-md-8 col-lg-7">
+        <div class="card p-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
-            @if (mascota == null)
-            {
-                <div class="mb-3">
-                    <label class="form-label">Mascota</label>
-                    <select asp-for="IdMascota" asp-items="ViewBag.MascotasSelectList"
-                            class="form-select">
-                        <option value="">-- Seleccione una mascota --</option>
-                    </select>
-                    <span asp-validation-for="IdMascota" class="text-danger"></span>
-                </div>
-            }
-            else
-            {
-                <input type="hidden" asp-for="IdMascota" />
-            }
-
-            <div class="mb-3">
-                <label asp-for="FechaConsulta" class="form-label"></label>
-                <input asp-for="FechaConsulta" class="form-control" type="datetime-local"
-                       max="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
-                <span asp-validation-for="FechaConsulta" class="text-danger"></span>
-                <div class="form-text">No se permiten fechas futuras.</div>
-            </div>
-
-            <div class="mb-3">
-                <label asp-for="Motivo" class="form-label"></label>
-                <input asp-for="Motivo" class="form-control"
-                       placeholder="Ej: Vacunación, Chequeo general, Cojera..." />
-                <span asp-validation-for="Motivo" class="text-danger"></span>
-            </div>
-
-            <div class="mb-3">
-                <label asp-for="Diagnostico" class="form-label"></label>
-                <textarea asp-for="Diagnostico" class="form-control" rows="3"
-                          placeholder="Resultado del examen (opcional)"></textarea>
-                <span asp-validation-for="Diagnostico" class="text-danger"></span>
-            </div>
-
-            <div class="mb-3">
-                <label asp-for="Tratamiento" class="form-label"></label>
-                <textarea asp-for="Tratamiento" class="form-control" rows="3"
-                          placeholder="Medicación o indicaciones (opcional)"></textarea>
-                <span asp-validation-for="Tratamiento" class="text-danger"></span>
-            </div>
-
-            <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-success">💾 Guardar Consulta</button>
-                @if (mascota != null)
+                @if (mascota == null)
                 {
-                    <a asp-controller="Consultas" asp-action="Historial"
-                       asp-route-mascotaId="@mascota.IdMascota"
-                       class="btn btn-secondary">↩ Ver Historial</a>
+                    <div class="mb-3">
+                        <label class="form-label fw-medium">Mascota / Paciente</label>
+                        <select asp-for="IdMascota" asp-items="ViewBag.MascotasSelectList"
+                                class="form-select">
+                            <option value="">-- Seleccione una mascota --</option>
+                        </select>
+                        <span asp-validation-for="IdMascota" class="text-danger small"></span>
+                    </div>
                 }
                 else
                 {
-                    <a asp-controller="Mascotas" asp-action="Index"
-                       class="btn btn-secondary">↩ Cancelar</a>
+                    <input type="hidden" asp-for="IdMascota" />
                 }
-            </div>
-        </form>
+
+                <div class="mb-3">
+                    <label asp-for="FechaConsulta" class="form-label fw-medium"></label>
+                    <input asp-for="FechaConsulta" class="form-control" type="datetime-local"
+                           max="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+                    <span asp-validation-for="FechaConsulta" class="text-danger small"></span>
+                    <div class="form-text">No se permiten fechas u horas futuras.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Motivo" class="form-label fw-medium"></label>
+                    <input asp-for="Motivo" class="form-control"
+                           placeholder="Ej: Vacunacion, Chequeo general, Cojera..." />
+                    <span asp-validation-for="Motivo" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Diagnostico" class="form-label fw-medium"></label>
+                    <textarea asp-for="Diagnostico" class="form-control" rows="3"
+                              placeholder="Resultado del examen clinico (opcional)"></textarea>
+                    <span asp-validation-for="Diagnostico" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Tratamiento" class="form-label fw-medium"></label>
+                    <textarea asp-for="Tratamiento" class="form-control" rows="3"
+                              placeholder="Medicacion, posologia o indicaciones (opcional)"></textarea>
+                    <span asp-validation-for="Tratamiento" class="text-danger small"></span>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-brand-primary px-4">
+                        <i class="bi bi-save me-1"></i> Guardar Consulta
+                    </button>
+                    @if (mascota != null)
+                    {
+                        <a asp-controller="Consultas" asp-action="Historial"
+                           asp-route-mascotaId="@mascota.IdMascota"
+                           class="btn btn-outline-secondary">Volver al Historial</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Mascotas" asp-action="Index"
+                           class="btn btn-outline-secondary">Cancelar</a>
+                    }
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
