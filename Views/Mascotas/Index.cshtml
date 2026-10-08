@@ -1,0 +1,94 @@
+@model IEnumerable<VetCare.Models.Mascota>
+@{
+    ViewData["Title"] = "Mascotas";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>🐾 Pacientes Registrados</h2>
+    <a asp-action="Create" class="btn btn-primary">+ Nueva Mascota</a>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<!-- RF-05: Búsqueda por nombre o especie -->
+<form method="get" asp-action="Index" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="search" value="@ViewBag.Search"
+               class="form-control" placeholder="Buscar por nombre o especie..." />
+        <button type="submit" class="btn btn-outline-secondary">🔍 Buscar</button>
+        @if (!string.IsNullOrEmpty(ViewBag.Search as string))
+        {
+            <a asp-action="Index" class="btn btn-outline-danger">✕ Limpiar</a>
+        }
+    </div>
+</form>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        No se encontraron mascotas.
+        @if (!string.IsNullOrEmpty(ViewBag.Search as string))
+        {
+            <span>Intente con otro término de búsqueda.</span>
+        }
+    </div>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Especie</th>
+                <th>Raza</th>
+                <th>Propietario</th>
+                <th>Teléfono</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><strong>@item.Nombre</strong></td>
+                    <td>@item.Especie</td>
+                    <td>@(item.Raza ?? "—")</td>
+                    <td>@item.NombrePropietario</td>
+                    <td>@(item.TelefonoPropietario ?? "—")</td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a asp-controller="Consultas" asp-action="Historial"
+                               asp-route-mascotaId="@item.IdMascota"
+                               class="btn btn-info text-white" title="Ver historial">
+                                📋 Historial
+                            </a>
+                            <a asp-controller="Consultas" asp-action="Create"
+                               asp-route-mascotaId="@item.IdMascota"
+                               class="btn btn-success" title="Nueva consulta">
+                                ➕ Consulta
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@item.IdMascota"
+                               class="btn btn-warning" title="Editar">✏️</a>
+                            <a asp-action="Delete" asp-route-id="@item.IdMascota"
+                               class="btn btn-danger" title="Eliminar">🗑️</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

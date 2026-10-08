@@ -1,0 +1,80 @@
+@model VetCare.Models.Mascota
+@{
+    ViewData["Title"] = $"Historial - {Model.Nombre}";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <h2>📋 Historial Médico — @Model.Nombre</h2>
+    <a asp-controller="Mascotas" asp-action="Index" class="btn btn-secondary btn-sm">↩ Volver</a>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Especie</dt>
+            <dd class="col-sm-3">@Model.Especie</dd>
+            <dt class="col-sm-3">Raza</dt>
+            <dd class="col-sm-3">@(Model.Raza ?? "—")</dd>
+            <dt class="col-sm-3">Propietario</dt>
+            <dd class="col-sm-3">@Model.NombrePropietario</dd>
+            <dt class="col-sm-3">Teléfono</dt>
+            <dd class="col-sm-3">@(Model.TelefonoPropietario ?? "—")</dd>
+        </dl>
+    </div>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5>Consultas (@Model.Consultas.Count)</h5>
+    <a asp-controller="Consultas" asp-action="Create"
+       asp-route-mascotaId="@Model.IdMascota"
+       class="btn btn-success btn-sm">➕ Nueva Consulta</a>
+</div>
+
+@if (!Model.Consultas.Any())
+{
+    <div class="alert alert-info">Esta mascota aún no tiene consultas registradas.</div>
+}
+else
+{
+    <div class="accordion" id="historialAccordion">
+        @{int i = 0;}
+        @foreach (var consulta in Model.Consultas)
+        {
+            var collapseId = $"consulta{consulta.IdConsulta}";
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button @(i > 0 ? "collapsed" : "")"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#@collapseId">
+                        <span class="me-3 text-muted small">
+                            @consulta.FechaConsulta.ToString("dd/MM/yyyy HH:mm")
+                        </span>
+                        <strong>@consulta.Motivo</strong>
+                    </button>
+                </h2>
+                <div id="@collapseId"
+                     class="accordion-collapse collapse @(i == 0 ? "show" : "")"
+                     data-bs-parent="#historialAccordion">
+                    <div class="accordion-body">
+                        <dl class="row mb-0">
+                            <dt class="col-sm-3">Diagnóstico</dt>
+                            <dd class="col-sm-9">@(consulta.Diagnostico ?? "—")</dd>
+                            <dt class="col-sm-3">Tratamiento</dt>
+                            <dd class="col-sm-9">@(consulta.Tratamiento ?? "—")</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            i++;
+        }
+    </div>
+}
